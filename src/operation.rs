@@ -72,10 +72,10 @@ pub struct Operation {
 }
 
 impl Operation {
-    pub fn add_response_success_json(&mut self, schema: Option<RefOr<Schema>>) {
+    pub fn add_response_success(&mut self, schema: Option<RefOr<Schema>>, content_type: String) {
         self.responses.responses.insert(StatusCode::Code(200), RefOr::Item({
             let mut content = indexmap::IndexMap::new();
-            content.insert("application/json".to_string(), MediaType {
+            content.insert(content_type, MediaType {
                 schema,
                 ..MediaType::default()
             });
@@ -86,9 +86,9 @@ impl Operation {
         }));
     }
 
-    pub fn add_request_body_json(&mut self, schema: Option<RefOr<Schema>>) {
+    pub fn add_request_body(&mut self, schema: Option<RefOr<Schema>>, content_type: String) {
         let mut content = indexmap::IndexMap::new();
-        content.insert("application/json".to_string(), MediaType {
+        content.insert(content_type, MediaType {
             schema,
             ..MediaType::default()
         });
